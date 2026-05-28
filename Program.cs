@@ -4,29 +4,29 @@ using MiPrimerCloudApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var frontendUrl = builder.Configuration["FRONTEND_URL"] ?? "http://localhost:5173";
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("FrontendPolicy", policy =>
-    {
-        policy
-            .WithOrigins(frontendUrl)
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
-});
-
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+    {
+        policy
+            .WithOrigins(
+                "https://mi-primer-cloud-front-git-main-franco-sassi-s-projects.vercel.app"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
-app.UseCors("FrontendPolicy");
+app.UseCors("Frontend");
 
-app.MapGet("/", () => "API funcionando en Render");
+app.MapGet("/", () => "API funcionando");
 
 app.MapGet("/saludo", () => "Hola desde Render!");
 
@@ -39,7 +39,13 @@ app.MapPost("/tareas", async (Tarea tarea, AppDbContext db) =>
 {
     db.Tareas.Add(tarea);
     await db.SaveChangesAsync();
-    return Results.Created($"/tareas/{tarea.Id}", tarea);
+    return Results.Ok(tarea);
 });
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 app.Run();
