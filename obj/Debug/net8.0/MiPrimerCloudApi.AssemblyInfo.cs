@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MiPrimerCloudApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+72331779a035e5223193ce4ccda8e4c91f60d4c8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+946356ce30c62b1ef9111219778d4e27dd4f704c")]
 [assembly: System.Reflection.AssemblyProductAttribute("MiPrimerCloudApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MiPrimerCloudApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
