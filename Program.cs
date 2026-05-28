@@ -34,7 +34,7 @@ app.MapGet("/tareas", async (AppDbContext db) =>
 {
     return await db.Tareas.ToListAsync();
 });
-
+//.
 app.MapPost("/tareas", async (Tarea tarea, AppDbContext db) =>
 {
     db.Tareas.Add(tarea);
